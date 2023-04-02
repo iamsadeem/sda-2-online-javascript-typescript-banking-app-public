@@ -100,3 +100,7 @@ console.log(arizonaBank.listCustomers(sunBranch,true))
 ```
 
 You can add more codes to check the functionality and secrity of your banking system
+
+## Installation
+1. After clone the project from your forked repo, run `npm install`
+2. Run `npm run watch` to see code running in watch mode, or check `package.json` for extra scripts
