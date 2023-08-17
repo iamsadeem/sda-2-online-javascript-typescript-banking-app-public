@@ -1,80 +1,104 @@
-# TypeScript Assignment
+# JavaScript Banking Application - OOP Practice
 
-- Check the scripts in `package.json` to run the suitable command for each challenge
+This project aims to build JavaScript classes for a banking application to practice Object-Oriented Programming (OOP) concepts.
 
-## Create a simple banking application
+## Level 1: Basic Requirements
 
-Implement the following classes, interface, and codes (you can decide which file to put each type, but do not write all the types in `index.ts` or `bank.ts`). All the properties must be kept private, while you can make the methods as public
+### Implement the following classes:
 
-1. Class Bank
+#### Bank Class:
 
-    - It has two properties: `name` (string), `branches` (array of type Branch[])
+Properties:
+- name (string)
+- branches (Branch[])
 
-    - A constructor that takes an argumment name (string). It initialises name and instantiates branches as empty array.
+Constructor:
+- Parameters: name (string)
 
-    - And six methods:
+Methods:
+- addBranch(branch: Branch): boolean
+  Description: Adds the branch to the branches array. Each branch should only be added once.
+  
+- addCustomer(branch: Branch, customer: Customer): boolean
+  Description: Adds the customer to the branch of the bank. Each customer can only be added once to a branch.
+  
+- addCustomerTransaction(branch: Branch, customerId: string, amount: number): boolean
+  Description: Adds a transaction of the amount for the customer with the specified customerId in the given branch.
+  
+- findBranchByName(branchName: string): Branch[] | null
+  Description: Returns a list of matched branches with the specified branchName or null if no matches were found.
+  
+- checkBranch(branch: Branch): boolean
+  Description: Returns true if the branch belongs to the bank or false otherwise.
+  
+- listCustomers(branch: Branch, includeTransactions: boolean): void
+  Description: Prints out a list of customers with their transaction details if includeTransactions is true.
 
-    - `addBranch()`, has one parameter of type `Branch` and returns a boolean. This function will add branch into array `branches`. It returns true if the branch was added successfully or false otherwise. Each branch is supposed to be added once only.
+#### Branch Class:
 
-    - `addCustomer()`, has 2 parameters: branch and customer and returns a boolean. It returns true if the customer is added successfully to the branch of the bank or false otherwise. Each customer can be added only once to a branch.
+Properties:
+- name (string)
+- customers (array of Customer[])
 
-    - `addCustomerTransaction()`, has three parameters: branch, customer id, amount of transaction and returns a boolean. It returns true if the customers transaction is added successfully or false otherwise.
+Constructor:
+- Parameters: name (string)
 
-    - `findBranchByName()`, has one parameter of type string (branch's name) and returns list of matched branches or null otherwise.
+Methods:
+- getName(): string
+- getCustomers(): Customer[]
+- addCustomer(customer: Customer): boolean
+  Description: Adds the customer to the customers array. Each customer should only be added once.
+  
+- addCustomerTransaction(customerId: string, amount: number): boolean
+  Description: Adds a transaction of the amount for the customer with the specified customerId.
 
-    - `checkBranch()`, has one parameter of type Branch and returns true if branch belongs to bank or false otherwise.
+#### Customer Class:
 
-    - `listCustomers()`, has two parameters, branch and boolean and returns a boolean. Return true if the branch exists or false otherwise. This method prints out a list of customers with transaction details if second parameter is true.
+Properties:
+- name (string)
+- id (string)
+- transactions (array of Transaction[])
 
-2. Class Branch
+Constructor:
+- Parameters: name, id
 
-    - It has two properties, a string called `name` and an array called `customers`. Array `customers` should hold objects of type Customer.
+Methods:
+- getName(): string
+- getId(): string
+- getTransactions(): Transaction[]
+- getBalance(): number
+  Note: The balance cannot be negative.
 
-    - A constructor that takes a string (name of the branch). It initialises name and instantiates customers as an emty array.
+- addTransaction(amount: number): boolean
+  Description: Adds a successful transaction of the amount to the transactions array.
 
-    - And 5 methods, they are (their functions are in their names):
+#### Transaction Class:
 
-        - `getName()`, getter for name.
+Properties:
+- amount (number)
+- date (Date)
 
-        - `getCustomers()`, getter for customers.
+Constructor:
+- Parameters: amount, date
 
-        - `addCustomer()`, has a parameter of type Customer and returns a boolean. Returns true if the customer was added successfully or false otherwise (each customer should be added once only).
+## Level 2: Additional Requirements
 
-        - `addCustomerTransaction()`, has a parameter of type string (id of customer), a number (for transaction) and returns a boolean. Returns true if the customers transaction is added successfully or false otherwise.
+In addition to the basic requirements, enhance the application with the following features:
 
-        - `findCustomer()`, has one parameter of type string (`id` of customer) and returns a customer. Return the customer if they exist, null otherwise.
+- Add validation checks to ensure that the data meets certain criteria before performing create or update operations. For example, validate required fields and data format.
 
-3. Class Customer
+## Running the JavaScript Code
 
-    - It has 3 properties, string `name`, string `id`, and an array that holds objects of type Transaction called `transactions`.
+Please run the following JavaScript code in bank.js and share your results and findings in the Slack channel
 
-    - A constructor that takes only a parameter of type string (name of customer). It initialises name and instantiates transactions as empty array. `id` should be initialized to be an unique string.
-
-    - And 5 methods:
-
-        - `getName()`, getter for name.
-
-        - `getId()`, getter for id.
-
-        - `getTransactions()`, getter for transactions.
-
-        - `getBalance()`, return the current balance from the transactions.
-
-        - `addTransaction()`, has one parameter of type number and return true if transaction is added sucessfully. You need to make sure that balance cannot be negative. This function should add the successful transaction into transactions array.
-
-4. Interface Transaction
-
-    - It has 2 properties, a number `amount`, and a Date called `date`. `date` refers to the time that transaction has been created.
-
-Run the following codes in `index.ts`and share your results and findings in the Slack channel
 
 ```
 const arizonaBank = new Bank("Arizona")
 const westBranch = new Branch("West Branch")
 const sunBranch = new Branch("Sun Branch")
-const customer1 = new Customer("John")
-const customer2 = new Customer("Anna")
-const customer3 = new Customer("John")
+const customer1 = new Customer("John", 1)
+const customer2 = new Customer("Anna", 2)
+const customer3 = new Customer("John", 3)
 
 arizonaBank.addBranch(westBranch)
 arizonaBank.addBranch(sunBranch)
@@ -100,6 +124,37 @@ console.log(arizonaBank.listCustomers(sunBranch,true))
 
 You can add more codes to check the functionality and secrity of your banking system
 
-## Installation
-1. After clone the project from your forked repo, run `npm install`
-2. Run `npm run watch` to see code running in watch mode, or check `package.json` for extra scripts
+## Level 3: Bonus Requirements (Optional)
+- Add search functionality to allow users to search for specific customers based on keywords or specific fields, such as by name or Id
+- Peer review: 
+- Review the code and implementation of 2 assignments from other participants.
+- Provide constructive feedback and suggestions for improvement.
+`Please note that the bonus requirements and reviews are optional and can be completed if you have additional time and advanced skills.`
+
+# TypeScript Banking Application
+
+Your task is to convert the existing project to TypeScript and add appropriate type annotations to enhance type safety and maintainability.
+
+## Guidelines
+
+To complete this assignment, follow the guidelines below:
+
+1. Set up TypeScript:
+   - Install TypeScript globally on your system if you haven't done so already.
+   - Create a new TypeScript configuration file (tsconfig.json) in the root folder of your project.
+
+2. Convert JavaScript files to TypeScript:
+   - Rename .js files to .ts extension. Please rename and update one by one.
+   - Define the type or interface for variables and declare the return types of the methods.
+   - Ensure that the converted TypeScript code compiles successfully without any type errors.
+
+3. Running the TypeScript Code:
+   Please run the code in bank.ts and share your results and findings in the Slack channel.
+
+### Notes
+
+- Ensure to apply proper type annotations for variables, function parameters, and return types to enhance type safety.
+- Leverage interfaces and custom types wherever appropriate to improve code maintainability and reusability.
+
+Happy coding!
+
