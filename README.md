@@ -132,7 +132,7 @@ You can add more codes to check the functionality and secrity of your banking sy
 `Please note that the bonus requirements and reviews are optional and can be completed if you have additional time and advanced skills.`
 
 # TypeScript Banking Application
-
+This is the Typescript assignment for the Typescript lecture. 
 Your task is to convert the existing project to TypeScript and add appropriate type annotations to enhance type safety and maintainability.
 
 ## Guidelines
