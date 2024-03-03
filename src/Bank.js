@@ -7,16 +7,20 @@ class Bank {
     addBranch(branch) {
         if (!this.branches.includes(branch)) {
             this.branches.push(branch);
-            return console.log(branch.name + ' was added successfully.');
+            console.log(branch.name + ' was added successfully.');
         }
-        return console.log(branch.name + ' failed to be added.');
+        else {
+            console.log(branch.name + ' failed to be added.');
+        }
     }
     addCustomer(branch, customer) {
         if (branch instanceof Branch && customer instanceof Customer) {
             branch.addCustomer(customer);
-            return console.log('customer: ' + customer.name + ' was added successfully to: ' + branch.name + '.');
+            console.log('customer: ' + customer.name + ' was added successfully to: ' + branch.name + '.');
         }
-        return console.log('customer: ' + customer.name + ' failed to be added.');
+        else {
+            console.log('customer: ' + customer.name + ' failed to be added.');
+        }
     }
     addCustomerTransaction(branch, customerId, amount, date) {
         if (branch instanceof Branch) {
@@ -35,29 +39,33 @@ class Bank {
     findBranchByName(branchName) {
         const branchCheck = this.branches.filter(branch => branch.getName().toLowerCase().includes(branchName.toLowerCase()));
         if (branchCheck.length > 0) {
-            return console.log('Branch(es) found: ' + branchCheck.map((b) => b.getName()).join(", "));
+            console.log('Branch(es) found: ' + branchCheck.map((b) => b.getName()).join(", "));
         }
-        return console.log('No branch found with the name: ' + branchName);
+        else {
+            console.log('No branch found with the name: ' + branchName);
+        }
     }
     checkBranch(branch) {
         return this.branches.includes(branch);
     }
     listCustomers(branch, includeTransactions) {
-        let output = "";
         const customers = branch.getCustomers();
         if (customers.length === 0) {
-            return "No customers found.";
+            console.log("No customers found.");
+            return;
         }
         customers.forEach(customer => {
-            output += `Customer: ${customer.getName()}\n`;
+            console.log('Customer: ' + customer.getName() + ' | ID: ' + customer.getId());
             if (includeTransactions) {
                 const transactions = customer.getTransactions();
                 transactions.forEach(transaction => {
-                    output += `Transaction: Amount - ${transaction.amount}, Date - ${transaction.date}\n`;
+                    console.log('Transaction: Amount - ' + transaction.amount + ', Date - ' + transaction.date);
                 });
+                if (transactions.length === 0) {
+                    console.log('No transactions yet.');
+                }
             }
         });
-        return output;
     }
 }
 class Branch {
@@ -142,5 +150,7 @@ arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000, currentD
 arizonaBank.addCustomerTransaction(sunBranch, customer2.getId(), 3000, currentDate);
 customer1.addTransaction(-1000, currentDate);
 console.log(customer1.name + ' balance is: ' + customer1.getBalance());
-console.log('- customers list of Arizona Bank - West Branch: \n' + arizonaBank.listCustomers(westBranch, true));
-console.log('- customers list of Arizona Bank - Sun Branch: \n' + arizonaBank.listCustomers(sunBranch, true));
+console.log('- customers list of Arizona Bank - West Branch:');
+arizonaBank.listCustomers(westBranch, true);
+console.log('- customers list of Arizona Bank - Sun Branch:');
+arizonaBank.listCustomers(sunBranch, true);
