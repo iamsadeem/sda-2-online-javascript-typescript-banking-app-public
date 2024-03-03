@@ -1,4 +1,6 @@
-class Bank {
+import Branch from "./Branch.js";
+import Customer from "./Customer.js";
+export class Bank {
     constructor(name) {
         this.name = name;
         this.branches = [];
@@ -68,67 +70,7 @@ class Bank {
         });
     }
 }
-class Branch {
-    constructor(name) {
-        this.name = name;
-        this.customers = [];
-    }
-    getName() {
-        return this.name;
-    }
-    getCustomers() {
-        return this.customers;
-    }
-    addCustomer(customer) {
-        if (!this.customers.includes(customer)) {
-            this.customers.push(customer);
-            return true;
-        }
-        return false;
-    }
-    addCustomerTransaction(customerId, amount, date) {
-        const customer = this.customers.find(cust => cust.getId() === customerId);
-        if (customer) {
-            return customer.addTransaction(amount, date);
-        }
-        return false;
-    }
-}
-class Customer {
-    constructor(name, id) {
-        this.name = name;
-        this.id = id;
-        this.transactions = [];
-    }
-    getName() {
-        return this.name;
-    }
-    getId() {
-        return this.id;
-    }
-    getTransactions() {
-        return this.transactions;
-    }
-    getBalance() {
-        return this.transactions.reduce((total, transaction) => total + transaction.amount, 0);
-    }
-    addTransaction(amount, date) {
-        if (amount > 0) {
-            const transaction = new Transaction(amount, date);
-            this.transactions.push(transaction);
-            console.log('transaction: ' + amount + ' was successful.');
-            return true;
-        }
-        console.log('transaction: ' + amount + ' failed.');
-        return false;
-    }
-}
-class Transaction {
-    constructor(amount, date = new Date()) {
-        this.amount = amount;
-        this.date = date;
-    }
-}
+//updated
 const arizonaBank = new Bank("Arizona");
 const westBranch = new Branch("West Branch");
 const sunBranch = new Branch("Sun Branch");

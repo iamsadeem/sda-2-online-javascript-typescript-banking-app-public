@@ -1,4 +1,7 @@
-class Bank {
+import Branch from "./Branch.js";
+import Customer from "./Customer.js";
+
+export class Bank {
     name: string;
     branches: Branch[];
 
@@ -70,122 +73,31 @@ class Bank {
                 }
             }
         });
-    }       
-}
-
-
-class Branch {
-    name: string;
-    customers: Customer[];
-
-    constructor(name: string) {
-        this.name = name;
-        this.customers = [];
-    }
-
-    getName(): string {
-        return this.name;
-    }
-
-    getCustomers(): Customer[] {
-        return this.customers;
-    }
-
-    addCustomer(customer: Customer): boolean {
-        if (!this.customers.includes(customer)) {
-            this.customers.push(customer);
-            return true;
-        }
-        return false;
-    }
-
-    addCustomerTransaction(customerId: number, amount: number, date: Date): boolean {
-        const customer = this.customers.find(cust => cust.getId() === customerId);
-        if (customer) {
-            return customer.addTransaction(amount, date);
-        }
-        return false;
     }
 }
 
-class Customer {
-    name: string;
-    id: number;
-    transactions: Transaction[];
-
-    constructor(name: string, id: number) {
-        this.name = name;
-        this.id = id;
-        this.transactions = [];
-    }
-
-    getName(): string {
-        return this.name;
-    }
-
-    getId(): number {
-        return this.id;
-    }
-
-    getTransactions(): Transaction[] {
-        return this.transactions;
-    }
-
-    getBalance(): number {
-        return this.transactions.reduce((total, transaction) => total + transaction.amount, 0);
-    }
-
-    addTransaction(amount: number, date: Date): boolean {
-        if (amount > 0) {
-            const transaction = new Transaction(amount, date);
-            this.transactions.push(transaction);
-            console.log('transaction: ' + amount + ' was successful.');
-            return true;
-        }
-        console.log('transaction: ' + amount + ' failed.');
-        return false;
-    }    
-}
-
-class Transaction {
-    amount: number;
-    date: Date;
-
-    constructor(amount: number, date: Date = new Date()) {
-        this.amount = amount;
-        this.date = date;
-    }
-}
-
-const arizonaBank = new Bank("Arizona")
-const westBranch = new Branch("West Branch")
-const sunBranch = new Branch("Sun Branch")
-const customer1 = new Customer("John", 1)
-const customer2 = new Customer("Anna", 2)
-const customer3 = new Customer("John", 3)
-
-arizonaBank.addBranch(westBranch)
-arizonaBank.addBranch(sunBranch)
-arizonaBank.addBranch(westBranch)
-
-arizonaBank.findBranchByName("bank")
-arizonaBank.findBranchByName("Sun")
-
-arizonaBank.addCustomer(westBranch, customer1)
-arizonaBank.addCustomer(westBranch, customer3)
-arizonaBank.addCustomer(sunBranch, customer1)
-arizonaBank.addCustomer(sunBranch, customer2)
-
-
+//updated
+const arizonaBank = new Bank("Arizona");
+const westBranch = new Branch("West Branch");
+const sunBranch = new Branch("Sun Branch");
+const customer1 = new Customer("John", 1);
+const customer2 = new Customer("Anna", 2);
+const customer3 = new Customer("John", 3);
+arizonaBank.addBranch(westBranch);
+arizonaBank.addBranch(sunBranch);
+arizonaBank.addBranch(westBranch);
+arizonaBank.findBranchByName("bank");
+arizonaBank.findBranchByName("Sun");
+arizonaBank.addCustomer(westBranch, customer1);
+arizonaBank.addCustomer(westBranch, customer3);
+arizonaBank.addCustomer(sunBranch, customer1);
+arizonaBank.addCustomer(sunBranch, customer2);
 const currentDate = new Date();
-
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000, currentDate);
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000, currentDate);
 arizonaBank.addCustomerTransaction(sunBranch, customer2.getId(), 3000, currentDate);
-
-
-customer1.addTransaction(-1000, currentDate)
-console.log(customer1.name + ' balance is: ' + customer1.getBalance())
+customer1.addTransaction(-1000, currentDate);
+console.log(customer1.name + ' balance is: ' + customer1.getBalance());
 console.log('- customers list of Arizona Bank - West Branch:');
 arizonaBank.listCustomers(westBranch, true);
 console.log('- customers list of Arizona Bank - Sun Branch:');
